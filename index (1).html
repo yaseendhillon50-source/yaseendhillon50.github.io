@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StylePK — Pakistan Fashion Store</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+:root {
+  --primary:#25D366;--primary-dark:#128C7E;--accent:#FF6B35;
+  --dark:#1a1a2e;--text:#2d2d2d;--muted:#6b7280;
+  --border:#e5e7eb;--bg:#f9fafb;--radius:12px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);}
+
+/* HEADER */
+header{background:var(--dark);padding:0 24px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,0.3);}
+.header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
+.store-logo{font-size:1.5rem;font-weight:800;color:white;cursor:pointer;}
+.store-logo span{color:var(--accent);}
+.header-actions{display:flex;gap:12px;align-items:center;}
+.cart-btn{background:var(--accent);color:white;border:none;padding:8px 16px;border-radius:8px;font-weight:700;cursor:pointer;font-size:0.9rem;display:flex;align-items:center;gap:6px;}
+.cart-count{background:white;color:var(--accent);width:20px;height:20px;border-radius:50%;font-size:0.75rem;font-weight:800;display:flex;align-items:center;justify-content:center;}
+.admin-btn{background:transparent;border:1px solid rgba(255,255,255,0.3);color:rgba(255,255,255,0.7);padding:6px 12px;border-radius:8px;cursor:pointer;font-size:0.8rem;}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--dark) 0%,#16213e 50%,#0f3460 100%);color:white;text-align:center;padding:60px 20px;}
+.hero h1{font-size:2.8rem;font-weight:800;margin-bottom:12px;line-height:1.2;}
+.hero h1 span{color:var(--accent);}
+.hero p{font-size:1.1rem;opacity:0.8;max-width:480px;margin:0 auto 24px;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(37,211,102,0.15);border:1px solid rgba(37,211,102,0.4);color:var(--primary);padding:8px 16px;border-radius:50px;font-size:0.9rem;font-weight:600;}
+
+/* TRUST */
+.trust-bar{background:white;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:14px 20px;}
+.trust-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:center;flex-wrap:wrap;gap:20px;}
+.trust-item{display:flex;align-items:center;gap:8px;font-size:0.85rem;font-weight:600;color:var(--muted);}
+
+/* PRODUCTS */
+main{max-width:1200px;margin:0 auto;padding:40px 20px;}
+.section-title{font-size:1.6rem;font-weight:800;margin-bottom:24px;color:var(--dark);}
+.section-title span{color:var(--accent);}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;}
+.product-card{background:white;border-radius:var(--radius);box-shadow:0 4px 20px rgba(0,0,0,0.08);overflow:hidden;transition:transform 0.2s,box-shadow 0.2s;}
+.product-card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,0.12);}
+.pc-img{width:100%;height:200px;background:linear-gradient(135deg,#f0f0f0,#e0e0e0);display:flex;align-items:center;justify-content:center;font-size:3rem;overflow:hidden;cursor:pointer;}
+.pc-img img{width:100%;height:100%;object-fit:cover;}
+.pc-info{padding:16px;}
+.pc-name{font-weight:700;font-size:1rem;margin-bottom:4px;}
+.pc-desc{font-size:0.82rem;color:var(--muted);margin-bottom:12px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.pc-footer{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.pc-price{font-size:1.2rem;font-weight:800;color:var(--accent);}
+.pc-orig{font-size:0.75rem;color:var(--muted);text-decoration:line-through;}
+.disc-badge{background:var(--accent);color:white;font-size:0.7rem;font-weight:700;padding:2px 6px;border-radius:10px;margin-left:4px;}
+.pc-actions{display:flex;gap:6px;}
+.btn-detail{background:white;color:var(--dark);border:2px solid var(--dark);padding:7px 10px;border-radius:8px;font-size:0.8rem;font-weight:700;cursor:pointer;}
+.btn-addcart{background:var(--dark);color:white;border:none;padding:7px 12px;border-radius:8px;font-size:0.85rem;font-weight:700;cursor:pointer;}
+.btn-addcart:hover{background:var(--accent);}
+
+/* PRODUCT DETAIL */
+#productPage{display:none;background:var(--bg);min-height:100vh;}
+.pd-breadcrumb{max-width:1200px;margin:0 auto;padding:16px 20px;font-size:0.85rem;color:var(--muted);}
+.pd-breadcrumb span{cursor:pointer;}.pd-breadcrumb span:hover{color:var(--accent);}
+.pd-container{max-width:1200px;margin:0 auto;padding:0 20px 60px;display:grid;grid-template-columns:1fr 1fr;gap:48px;}
+.pd-gallery{position:sticky;top:80px;align-self:start;}
+.pd-main-img{width:100%;aspect-ratio:1;border-radius:16px;overflow:hidden;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:6rem;margin-bottom:12px;border:2px solid var(--border);}
+.pd-main-img img{width:100%;height:100%;object-fit:cover;}
+.pd-thumbs{display:flex;gap:8px;flex-wrap:wrap;}
+.pd-thumb{width:72px;height:72px;border-radius:8px;overflow:hidden;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:1.8rem;border:2px solid transparent;cursor:pointer;}
+.pd-thumb.active{border-color:var(--accent);}
+.pd-thumb img{width:100%;height:100%;object-fit:cover;}
+.pd-info{padding:4px 0;}
+.pd-badge{display:inline-block;background:#dcfce7;color:#15803d;font-size:0.75rem;font-weight:700;padding:4px 10px;border-radius:20px;margin-bottom:12px;}
+.pd-name{font-size:1.8rem;font-weight:800;line-height:1.2;margin-bottom:10px;color:var(--dark);}
+.pd-stars{color:#f59e0b;font-size:1rem;letter-spacing:1px;margin-bottom:16px;}
+.pd-price-block{margin-bottom:20px;}
+.pd-price{font-size:2.2rem;font-weight:800;color:var(--accent);}
+.pd-price-orig{font-size:1rem;color:var(--muted);text-decoration:line-through;margin-left:10px;}
+.pd-discount{background:var(--accent);color:white;font-size:0.75rem;font-weight:700;padding:3px 8px;border-radius:20px;margin-left:8px;}
+.pd-short-desc{font-size:0.95rem;color:var(--muted);line-height:1.7;margin-bottom:20px;}
+.pd-section-label{font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--muted);margin-bottom:8px;}
+.pd-variants{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
+.pd-variant-btn{padding:7px 14px;border:2px solid var(--border);border-radius:8px;font-size:0.85rem;font-weight:600;cursor:pointer;background:white;color:var(--text);}
+.pd-variant-btn.active{border-color:var(--dark);background:var(--dark);color:white;}
+.pd-color-btn{width:32px;height:32px;border-radius:50%;border:3px solid transparent;cursor:pointer;outline:2px solid transparent;}
+.pd-color-btn.active{outline:2px solid var(--dark);outline-offset:2px;}
+.pd-qty-row{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
+.qty-ctrl{display:flex;align-items:center;border:2px solid var(--border);border-radius:10px;overflow:hidden;}
+.qty-ctrl button{width:38px;height:42px;border:none;background:white;font-size:1.2rem;cursor:pointer;font-weight:700;}
+.qty-ctrl span{padding:0 16px;font-size:1rem;font-weight:700;min-width:50px;text-align:center;}
+.pd-cta{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
+.btn-buy-now{padding:15px;background:var(--primary);color:white;border:none;border-radius:12px;font-size:1rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn-buy-now:hover{background:var(--primary-dark);}
+.btn-add-full{padding:14px;background:var(--dark);color:white;border:none;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;}
+.btn-add-full:hover{background:var(--accent);}
+.pd-delivery-info{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:24px;display:flex;flex-direction:column;gap:10px;}
+.pd-di-row{display:flex;align-items:center;gap:10px;font-size:0.88rem;}
+.pd-tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:24px;}
+.pd-tab{padding:12px 20px;font-size:0.9rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;}
+.pd-tab.active{color:var(--dark);border-bottom-color:var(--accent);}
+.pd-tab-content{display:none;}
+.pd-tab-content.active{display:block;}
+.specs-table{width:100%;border-collapse:collapse;font-size:0.88rem;}
+.specs-table tr:nth-child(even){background:var(--bg);}
+.specs-table td{padding:10px 14px;border-bottom:1px solid var(--border);}
+.specs-table td:first-child{font-weight:700;color:var(--muted);width:40%;}
+
+/* CART */
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:500;display:none;}
+.cart-overlay.show{display:block;}
+.cart-drawer{position:fixed;right:0;top:0;bottom:0;width:100%;max-width:420px;background:white;box-shadow:-4px 0 30px rgba(0,0,0,0.15);z-index:501;transform:translateX(100%);transition:transform 0.3s ease;display:flex;flex-direction:column;}
+.cart-drawer.show{transform:translateX(0);}
+.cart-header{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.cart-header h2{font-size:1.2rem;font-weight:800;}
+.close-cart{background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--muted);}
+.cart-items{flex:1;overflow-y:auto;padding:16px 24px;}
+.cart-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);}
+.cart-item-img{width:64px;height:64px;border-radius:8px;background:var(--bg);overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.5rem;}
+.cart-item-img img{width:100%;height:100%;object-fit:cover;}
+.cart-item-info{flex:1;}
+.cart-item-name{font-weight:700;font-size:0.9rem;margin-bottom:2px;}
+.cart-item-variant{font-size:0.78rem;color:var(--muted);margin-bottom:4px;}
+.cart-item-price{color:var(--accent);font-weight:700;font-size:0.95rem;}
+.qty-control{display:flex;align-items:center;gap:8px;margin-top:6px;}
+.qty-btn{width:26px;height:26px;border:1px solid var(--border);background:white;border-radius:6px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;}
+.qty-num{font-weight:700;font-size:0.9rem;min-width:20px;text-align:center;}
+.remove-item{background:none;border:none;color:#dc2626;cursor:pointer;font-size:0.8rem;margin-left:auto;align-self:flex-start;}
+.cart-footer{padding:20px 24px;border-top:2px solid var(--border);}
+.cart-total{display:flex;justify-content:space-between;font-size:1.1rem;font-weight:800;margin-bottom:16px;}
+.checkout-btn{width:100%;padding:14px;background:var(--primary);color:white;border:none;border-radius:10px;font-size:1rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;}
+.checkout-btn:hover{background:var(--primary-dark);}
+.empty-cart{text-align:center;padding:40px 20px;color:var(--muted);}
+
+/* CHECKOUT */
+#checkoutModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:600;align-items:center;justify-content:center;padding:20px;}
+#checkoutModal.show{display:flex;}
+.checkout-box{background:white;border-radius:16px;padding:28px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;}
+.checkout-box h2{font-size:1.3rem;font-weight:800;margin-bottom:18px;}
+.form-group{margin-bottom:13px;}
+.form-group label{display:block;font-size:0.8rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:11px 14px;border:2px solid var(--border);border-radius:8px;font-size:0.95rem;outline:none;transition:border 0.2s;font-family:'Inter',sans-serif;}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--primary);}
+.form-group textarea{resize:vertical;min-height:70px;}
+.order-summary{background:var(--bg);border-radius:10px;padding:14px;margin-bottom:14px;}
+.order-summary h3{font-size:0.85rem;font-weight:700;margin-bottom:8px;color:var(--muted);text-transform:uppercase;}
+.order-line{display:flex;justify-content:space-between;font-size:0.88rem;margin-bottom:5px;}
+.order-line.total{font-weight:800;font-size:1rem;border-top:1px solid var(--border);padding-top:8px;margin-top:4px;}
+.send-order-btn{width:100%;padding:14px;background:var(--primary);color:white;border:none;border-radius:10px;font-size:1rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;}
+.cancel-btn{width:100%;padding:10px;background:white;color:var(--muted);border:2px solid var(--border);border-radius:10px;font-size:0.9rem;font-weight:600;cursor:pointer;margin-top:8px;}
+
+/* LOGIN */
+#loginModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:700;align-items:center;justify-content:center;}
+#loginModal.show{display:flex;}
+.login-box{background:white;border-radius:16px;padding:36px;width:90%;max-width:380px;text-align:center;}
+.login-box h2{font-size:1.4rem;font-weight:800;margin-bottom:8px;}
+.lfield{margin-bottom:14px;text-align:left;}
+.lfield label{display:block;font-size:0.8rem;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:5px;}
+.lfield input{width:100%;padding:10px 14px;border:2px solid var(--border);border-radius:8px;font-size:0.95rem;outline:none;}
+.lfield input:focus{border-color:var(--primary);}
+.btn-primary{width:100%;padding:12px;background:var(--primary);color:white;border:none;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;margin-top:4px;}
+.btn-secondary{width:100%;padding:10px;background:white;color:var(--text);border:2px solid var(--border);border-radius:10px;font-size:0.95rem;font-weight:600;cursor:pointer;margin-top:8px;}
+
+/* ADMIN */
+#adminPanel{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:1000;align-items:flex-start;justify-content:center;overflow-y:auto;padding:20px;}
+#adminPanel.show{display:flex;}
+.admin-box{background:white;border-radius:16px;padding:28px;width:90%;max-width:620px;box-shadow:0 20px 60px rgba(0,0,0,0.3);margin:auto;}
+.admin-box h2{font-size:1.3rem;margin-bottom:18px;font-weight:800;}
+.admin-tabs{display:flex;gap:8px;margin-bottom:18px;}
+.admin-tab{flex:1;padding:8px;border:2px solid var(--border);background:white;border-radius:8px;cursor:pointer;font-size:0.82rem;font-weight:700;color:var(--muted);}
+.admin-tab.active{border-color:var(--primary);background:var(--primary);color:white;}
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+.afield{margin-bottom:14px;}
+.afield label{display:block;font-size:0.8rem;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:5px;}
+.afield input,.afield textarea{width:100%;padding:9px 13px;border:2px solid var(--border);border-radius:8px;font-size:0.9rem;outline:none;font-family:'Inter',sans-serif;}
+.afield input:focus,.afield textarea:focus{border-color:var(--primary);}
+.afield textarea{resize:vertical;min-height:60px;}
+.products-list{max-height:500px;overflow-y:auto;}
+.p-edit-card{border:1px solid var(--border);border-radius:12px;margin-bottom:10px;background:#fafafa;}
+.p-edit-header{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;}
+.p-edit-thumb{width:48px;height:48px;border-radius:8px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:1.5rem;overflow:hidden;flex-shrink:0;}
+.p-edit-thumb img{width:100%;height:100%;object-fit:cover;}
+.p-edit-title{flex:1;font-weight:700;font-size:0.9rem;}
+.p-edit-price-tag{font-size:0.9rem;font-weight:700;color:var(--accent);}
+.p-edit-body{display:none;padding:14px;border-top:1px solid var(--border);}
+.p-edit-body.open{display:block;}
+.p-row{display:flex;gap:8px;margin-bottom:8px;}
+.p-row input,.p-row textarea{flex:1;padding:8px 11px;border:1.5px solid var(--border);border-radius:8px;font-size:0.85rem;outline:none;font-family:'Inter',sans-serif;}
+.p-row input:focus,.p-row textarea:focus{border-color:var(--primary);}
+.img-upload-area{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.img-thumb-a{width:56px;height:56px;border-radius:8px;border:2px solid var(--border);background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:1.6rem;overflow:hidden;cursor:pointer;position:relative;flex-shrink:0;}
+.img-thumb-a img{width:100%;height:100%;object-fit:cover;border-radius:6px;}
+.upload-lbl{flex:1;padding:8px 12px;background:#eff6ff;color:#2563eb;border:2px dashed #93c5fd;border-radius:8px;font-size:0.82rem;font-weight:600;cursor:pointer;text-align:center;line-height:1.5;display:block;}
+input[type="file"].fhide{display:none;}
+.extra-imgs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;}
+.extra-img-wrap{position:relative;width:52px;height:52px;}
+.extra-img-wrap img{width:52px;height:52px;border-radius:6px;object-fit:cover;border:1px solid var(--border);}
+.extra-img-rm{position:absolute;top:-6px;right:-6px;background:#dc2626;color:white;border:none;border-radius:50%;width:18px;height:18px;font-size:0.65rem;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.sdiv{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--muted);margin:12px 0 6px;}
+.spec-row{display:flex;gap:8px;margin-bottom:6px;align-items:center;}
+.spec-row input{flex:1;padding:7px 10px;border:1.5px solid var(--border);border-radius:7px;font-size:0.85rem;outline:none;}
+.spec-row input:focus{border-color:var(--primary);}
+.btn-add-spec{background:#f0fdf4;color:#15803d;border:1.5px dashed #86efac;border-radius:7px;padding:6px 12px;font-size:0.82rem;font-weight:600;cursor:pointer;width:100%;margin-top:4px;}
+.btn-del-spec{background:#fee2e2;border:none;color:#dc2626;padding:6px 8px;border-radius:6px;cursor:pointer;font-size:0.75rem;font-weight:700;flex-shrink:0;}
+.btn-del-p{background:#fee2e2;border:none;color:#dc2626;padding:7px 14px;border-radius:8px;font-size:0.82rem;font-weight:700;cursor:pointer;margin-top:10px;}
+.btn-add-p{width:100%;padding:10px;background:#eff6ff;color:#2563eb;border:2px dashed #93c5fd;border-radius:8px;font-size:0.9rem;font-weight:600;cursor:pointer;margin-top:8px;}
+.loading-overlay{position:fixed;inset:0;background:rgba(255,255,255,0.8);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;}
+.spinner{width:40px;height:40px;border:4px solid var(--border);border-top:4px solid var(--accent);border-radius:50%;animation:spin 0.8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--dark);color:white;padding:12px 24px;border-radius:50px;font-size:0.9rem;font-weight:600;z-index:9999;opacity:0;transition:opacity 0.3s;white-space:nowrap;}
+.toast.show{opacity:1;}
+footer{background:var(--dark);color:rgba(255,255,255,0.6);text-align:center;padding:24px;font-size:0.85rem;margin-top:40px;}
+@media(max-width:700px){.pd-container{grid-template-columns:1fr;gap:24px;}.pd-gallery{position:static;}.hero h1{font-size:2rem;}.products-grid{grid-template-columns:repeat(2,1fr);gap:12px;}.cart-drawer{max-width:100%;}}
+</style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+  <p style="font-weight:600;color:var(--muted)">Store load ho raha hai...</p>
+</div>
+
+<!-- LOGIN -->
+<div id="loginModal">
+  <div class="login-box">
+    <div style="font-size:2.5rem;margin-bottom:12px">🔐</div>
+    <h2>Admin Login</h2>
+    <p style="color:var(--muted);font-size:0.9rem;margin-bottom:20px">Password daalen</p>
+    <div class="lfield"><label>Password</label><input type="password" id="loginPass" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <button class="btn-primary" onclick="doLogin()">Login</button>
+    <button class="btn-secondary" onclick="closeLogin()">Cancel</button>
+    <p id="loginError" style="color:#dc2626;font-size:0.85rem;margin-top:10px;display:none">❌ Galat password!</p>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div id="adminPanel">
+  <div class="admin-box">
+    <h2>⚙️ Store Settings</h2>
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="switchTab('general',this)">General</button>
+      <button class="admin-tab" onclick="switchTab('products',this)">Products</button>
+    </div>
+    <div id="tab-general" class="tab-content active">
+      <div class="afield"><label>Store Naam</label><input type="text" id="adminStoreName"></div>
+      <div class="afield"><label>WhatsApp Number</label><input type="text" id="adminPhone"></div>
+      <div class="afield"><label>Tagline</label><input type="text" id="adminTagline"></div>
+      <div class="afield"><label>Naya Password (khaali chhoden agar change na karein)</label><input type="password" id="adminNewPass" placeholder="Naya password..."></div>
+    </div>
+    <div id="tab-products" class="tab-content">
+      <div class="products-list" id="adminProductsList"></div>
+      <button class="btn-add-p" onclick="addNewProduct()">+ Naya Product Add Karein</button>
+    </div>
+    <button class="btn-primary" onclick="saveAdmin()" style="margin-top:16px">💾 Save Karein</button>
+    <button class="btn-secondary" onclick="closeAdmin()">Cancel</button>
+  </div>
+</div>
+
+<!-- CART -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header"><h2>🛒 Aapka Cart</h2><button class="close-cart" onclick="closeCart()">✕</button></div>
+  <div class="cart-items" id="cartItems"><div class="empty-cart"><div style="font-size:3rem">🛍️</div><p>Cart khali hai</p></div></div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-total"><span>Total:</span><span id="cartTotal">Rs. 0</span></div>
+    <button class="checkout-btn" onclick="openCheckout()">📱 WhatsApp Order Karein</button>
+  </div>
+</div>
+
+<!-- CHECKOUT -->
+<div id="checkoutModal">
+  <div class="checkout-box">
+    <h2>📦 Order Details</h2>
+    <div class="order-summary"><h3>Order Summary</h3><div id="checkoutItems"></div>
+      <div class="order-line total"><span>Total:</span><span id="checkoutTotal"></span></div>
+    </div>
+    <div class="form-group"><label>Aapka Naam *</label><input type="text" id="custName" placeholder="Poora naam"></div>
+    <div class="form-group"><label>Phone *</label><input type="tel" id="custPhone" placeholder="03xxxxxxxxx"></div>
+    <div class="form-group"><label>Delivery Address *</label><textarea id="custAddress" placeholder="Ghar ka pata, gali, shehar..."></textarea></div>
+    <div class="form-group"><label>Payment</label>
+      <select id="payMethod"><option>Cash on Delivery (COD)</option><option>EasyPaisa</option><option>JazzCash</option><option>Bank Transfer</option></select>
+    </div>
+    <div class="form-group"><label>Note (Optional)</label><textarea id="custNote" placeholder="Koi khaas baat..."></textarea></div>
+    <button class="send-order-btn" onclick="sendWhatsAppOrder()">📲 WhatsApp pe Order Bhejen</button>
+    <button class="cancel-btn" onclick="closeCheckout()">Wapas Jao</button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="store-logo" id="logoDisplay" onclick="showHomePage()">Style<span>PK</span></div>
+    <div class="header-actions">
+      <button class="admin-btn" onclick="openLogin()">⚙️ Admin</button>
+      <button class="cart-btn" onclick="openCart()">🛒 Cart <span class="cart-count" id="cartCountBadge">0</span></button>
+    </div>
+  </div>
+</header>
+
+<!-- HOME -->
+<div id="homePage">
+  <section class="hero">
+    <h1 id="heroTitle">Style<span>PK</span> — Best Fashion!</h1>
+    <p id="heroTagline">Pakistan ka number 1 fashion store — fast delivery, genuine products</p>
+    <div class="hero-badge" id="heroBadge">📱 WhatsApp pe seedha order karein — 03416032331</div>
+  </section>
+  <div class="trust-bar"><div class="trust-inner">
+    <div class="trust-item">🚀 Fast Delivery</div><div class="trust-item">✅ 100% Genuine</div>
+    <div class="trust-item">💰 Cash on Delivery</div><div class="trust-item">↩️ Easy Returns</div><div class="trust-item">📞 24/7 Support</div>
+  </div></div>
+  <main><h2 class="section-title">🔥 <span>Featured</span> Products</h2>
+    <div class="products-grid" id="productsGrid">
+      <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted)">
+        <div style="font-size:3rem">📦</div><p style="margin-top:8px">Products load ho rahe hain...</p>
+      </div>
+    </div>
+  </main>
+  <footer><div id="footerStoreName">StylePK</div><p style="margin-top:6px">Orders: WhatsApp 📱 <span id="footerPhone">03416032331</span></p><p style="margin-top:4px;font-size:0.75rem">© 2025 All Rights Reserved</p></footer>
+</div>
+
+<!-- PRODUCT DETAIL -->
+<div id="productPage">
+  <div class="pd-breadcrumb"><span onclick="showHomePage()">🏠 Home</span> › <span onclick="showHomePage()">Products</span> › <span id="pd-bc-name" style="color:var(--text);cursor:default"></span></div>
+  <div class="pd-container">
+    <div class="pd-gallery">
+      <div class="pd-main-img" id="pdMainImg"><span style="font-size:6rem">📦</span></div>
+      <div class="pd-thumbs" id="pdThumbs"></div>
+    </div>
+    <div class="pd-info">
+      <div class="pd-badge">✅ In Stock</div>
+      <h1 class="pd-name" id="pdName">Product</h1>
+      <div class="pd-stars">★★★★★ <span style="font-size:0.85rem;color:var(--muted)">(48 reviews)</span></div>
+      <div class="pd-price-block">
+        <span class="pd-price" id="pdPrice">Rs. 0</span>
+        <span class="pd-price-orig" id="pdPriceOrig"></span>
+        <span class="pd-discount" id="pdDiscount" style="display:none"></span>
+      </div>
+      <p class="pd-short-desc" id="pdShortDesc"></p>
+      <div id="pdSizeSection" style="display:none"><div class="pd-section-label">Size:</div><div class="pd-variants" id="pdSizes"></div></div>
+      <div id="pdColorSection" style="display:none"><div class="pd-section-label">Rang:</div><div class="pd-variants" id="pdColors"></div></div>
+      <div id="pdVariantSection" style="display:none"><div class="pd-section-label">Option:</div><div class="pd-variants" id="pdVariants"></div></div>
+      <div class="pd-qty-row">
+        <div style="font-size:0.8rem;font-weight:700;color:var(--muted);text-transform:uppercase">Qty:</div>
+        <div class="qty-ctrl"><button onclick="pdChangeQty(-1)">−</button><span id="pdQtyNum">1</span><button onclick="pdChangeQty(1)">+</button></div>
+      </div>
+      <div class="pd-cta">
+        <button class="btn-buy-now" onclick="pdBuyNow()">📲 Abhi WhatsApp pe Order Karein</button>
+        <button class="btn-add-full" onclick="pdAddToCart()">🛒 Cart Mein Daalein</button>
+      </div>
+      <div class="pd-delivery-info">
+        <div class="pd-di-row"><span>🚚</span><div><strong>Free Delivery</strong> — Pakistan bhar mein</div></div>
+        <div class="pd-di-row"><span>💰</span><div><strong>Cash on Delivery</strong> — COD available</div></div>
+        <div class="pd-di-row"><span>↩️</span><div><strong>Easy Returns</strong> — 7 din mein wapas</div></div>
+      </div>
+      <div class="pd-tabs">
+        <div class="pd-tab active" onclick="pdTab('desc',this)">📝 Tafseel</div>
+        <div class="pd-tab" onclick="pdTab('specs',this)">📋 Specs</div>
+      </div>
+      <div id="pd-tab-desc" class="pd-tab-content active"><p id="pdFullDesc" style="font-size:0.92rem;line-height:1.8;white-space:pre-wrap"></p></div>
+      <div id="pd-tab-specs" class="pd-tab-content"><table class="specs-table" id="pdSpecsTable"></table></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+import { getFirestore, doc, getDoc, setDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBwL-5q4NlCwamf8Zq21pfFNfEFH9n3nCw",
+  authDomain: "stylepk-2524f.firebaseapp.com",
+  projectId: "stylepk-2524f",
+  storageBucket: "stylepk-2524f.firebasestorage.app",
+  messagingSenderId: "899704812552",
+  appId: "1:899704812552:web:2a64488e0e66082a054dbd",
+  measurementId: "G-TJDT4R1X63"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// DEFAULT DATA
+const defaultStore = {
+  name:"StylePK", phone:"03416032331",
+  tagline:"Pakistan ka number 1 fashion store — fast delivery, genuine products",
+  password:"admin123"
+};
+const defaultProducts = [
+  {id:"p1",name:"Shalwar Kameez",shortDesc:"Premium quality fabric, stitched, all sizes available.",fullDesc:"Yeh shalwar kameez premium quality fabric se bana hai.\n\n✅ Features:\n• Stitched ready to wear\n• All sizes available\n• Machine washable\n• 1 hafta return policy",price:1800,origPrice:2500,image:"👕",imgUrl:"",extraImgs:[],sizes:["S","M","L","XL","XXL"],colors:["#1a1a2e","#ffffff","#16a34a","#dc2626"],variants:[],specs:[["Material","Cotton Blend"],["Fit","Regular"],["Wash","Machine Wash"],["Origin","Pakistan"]]},
+  {id:"p2",name:"Lawn Suit",shortDesc:"3 piece lawn suit, summer collection, beautiful prints.",fullDesc:"Yeh lawn suit summer ke liye perfect hai.\n\n✅ Features:\n• 3 piece suit\n• Beautiful print\n• Soft fabric\n• Dupatta included",price:2200,origPrice:3000,image:"👗",imgUrl:"",extraImgs:[],sizes:["S","M","L","XL"],colors:["#ec4899","#8b5cf6","#f59e0b"],variants:[],specs:[["Type","3 Piece"],["Fabric","Lawn"],["Season","Summer"],["Dupatta","Included"]]},
+  {id:"p3",name:"Kurta",shortDesc:"Casual kurta, slim fit, perfect for daily wear.",fullDesc:"Yeh kurta daily wear ke liye perfect hai.\n\n✅ Features:\n• Slim fit design\n• Soft comfortable fabric\n• Side slits\n• Easy care",price:950,origPrice:1500,image:"🥻",imgUrl:"",extraImgs:[],sizes:["S","M","L","XL"],colors:["#1c1917","#0f172a","#7c3aed"],variants:[],specs:[["Type","Kurta"],["Fit","Slim"],["Fabric","Cotton"],["Style","Casual"]]},
+];
+
+let storeData = {...defaultStore};
+let products = [...defaultProducts];
+let cart = [];
+let isLoggedIn = false;
+let currentPdId = null;
+let pdQty = 1;
+let pdSelectedSize=null, pdSelectedColor=null, pdSelectedVariant=null;
+
+// LOAD FROM FIREBASE
+async function loadFromFirebase() {
+  try {
+    const storeDoc = await getDoc(doc(db, "store", "config"));
+    if (storeDoc.exists()) storeData = storeDoc.data();
+    
+    const prodsSnap = await getDocs(collection(db, "products"));
+    if (!prodsSnap.empty) {
+      products = [];
+      prodsSnap.forEach(d => products.push({id: d.id, ...d.data()}));
+      products.sort((a,b) => (a.order||0)-(b.order||0));
+    }
+  } catch(e) { console.log("Firebase load error:", e); }
+  
+  try { const c = localStorage.getItem('cartData'); if(c) cart = JSON.parse(c); } catch(e){}
+  
+  document.getElementById('loadingOverlay').style.display = 'none';
+  renderAll();
+}
+
+// SAVE TO FIREBASE
+async function saveToFirebase() {
+  try {
+    await setDoc(doc(db, "store", "config"), storeData);
+    for(let i=0; i<products.length; i++) {
+      const p = {...products[i], order: i};
+      const id = p.id;
+      delete p.id;
+      await setDoc(doc(db, "products", id), p);
+    }
+    return true;
+  } catch(e) { console.log("Save error:", e); return false; }
+}
+
+function saveCart() { try{ localStorage.setItem('cartData', JSON.stringify(cart)); }catch(e){} }
+
+// RENDER
+function renderAll() {
+  const n = storeData.name || "StylePK";
+  document.getElementById('logoDisplay').innerHTML = n.slice(0,-2)+'<span>'+n.slice(-2)+'</span>';
+  document.getElementById('heroTitle').innerHTML = `${n} — <span>Best Fashion!</span>`;
+  document.getElementById('heroTagline').textContent = storeData.tagline||'';
+  document.getElementById('footerStoreName').textContent = n;
+  document.getElementById('footerPhone').textContent = storeData.phone||'';
+  document.getElementById('heroBadge').innerHTML = `📱 WhatsApp pe seedha order karein — ${storeData.phone||''}`;
+  document.title = n + " — Pakistan Fashion Store";
+  renderProducts();
+  renderCart();
+}
+
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function renderProducts() {
+  const g = document.getElementById('productsGrid');
+  if (!products.length) { g.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted)"><div style="font-size:3rem">📦</div><p style="margin-top:8px">Koi product nahi — Admin se add karein</p></div>'; return; }
+  g.innerHTML = products.map(p => {
+    const disc = p.origPrice&&p.origPrice>p.price ? Math.round((1-p.price/p.origPrice)*100) : 0;
+    const img = p.imgUrl || (p.extraImgs&&p.extraImgs[0]) || '';
+    return `<div class="product-card">
+      <div class="pc-img" onclick="openProduct('${p.id}')" style="cursor:pointer">
+        ${img?`<img src="${img}" alt="${esc(p.name)}">`:p.image||'📦'}
+      </div>
+      <div class="pc-info">
+        <div class="pc-name">${esc(p.name)}</div>
+        <div class="pc-desc">${esc(p.shortDesc)}</div>
+        <div class="pc-footer">
+          <div>
+            <div class="pc-price">Rs. ${p.price.toLocaleString()} ${disc?`<span class="disc-badge">-${disc}%</span>`:''}
+            </div>
+            ${p.origPrice&&p.origPrice>p.price?`<div class="pc-orig">Rs. ${p.origPrice.toLocaleString()}</div>`:''}
+          </div>
+          <div class="pc-actions">
+            <button class="btn-detail" onclick="openProduct('${p.id}')">Details</button>
+            <button class="btn-addcart" onclick="event.stopPropagation();addToCart('${p.id}')">+ Add</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// PRODUCT DETAIL
+window.openProduct = function(id) {
+  const p = products.find(x=>x.id===id); if(!p) return;
+  currentPdId=id; pdQty=1; pdSelectedSize=null; pdSelectedColor=null; pdSelectedVariant=null;
+  document.getElementById('pd-bc-name').textContent=p.name;
+  document.getElementById('pdName').textContent=p.name;
+  document.getElementById('pdPrice').textContent=`Rs. ${p.price.toLocaleString()}`;
+  if(p.origPrice&&p.origPrice>p.price){
+    document.getElementById('pdPriceOrig').textContent=`Rs. ${p.origPrice.toLocaleString()}`;
+    const disc=Math.round((1-p.price/p.origPrice)*100);
+    document.getElementById('pdDiscount').textContent=`-${disc}%`;
+    document.getElementById('pdDiscount').style.display='inline';
+  } else { document.getElementById('pdPriceOrig').textContent=''; document.getElementById('pdDiscount').style.display='none'; }
+  document.getElementById('pdShortDesc').textContent=p.shortDesc||'';
+  document.getElementById('pdFullDesc').textContent=p.fullDesc||p.shortDesc||'';
+  document.getElementById('pdQtyNum').textContent='1';
+  const mainImg=document.getElementById('pdMainImg');
+  const allImgs=[p.imgUrl,...(p.extraImgs||[])].filter(Boolean);
+  if(allImgs.length) mainImg.innerHTML=`<img src="${allImgs[0]}" alt="${esc(p.name)}" style="width:100%;height:100%;object-fit:cover">`;
+  else mainImg.innerHTML=`<span style="font-size:6rem">${p.image||'📦'}</span>`;
+  const tc=document.getElementById('pdThumbs'); tc.innerHTML='';
+  if(allImgs.length>1) allImgs.forEach((url,i)=>{ const d=document.createElement('div'); d.className='pd-thumb'+(i===0?' active':''); d.innerHTML=`<img src="${url}">`; d.onclick=()=>{ mainImg.innerHTML=`<img src="${url}" style="width:100%;height:100%;object-fit:cover">`; tc.querySelectorAll('.pd-thumb').forEach(t=>t.classList.remove('active')); d.classList.add('active'); }; tc.appendChild(d); });
+  if(p.sizes&&p.sizes.length){ document.getElementById('pdSizeSection').style.display='block'; document.getElementById('pdSizes').innerHTML=p.sizes.map(s=>`<button class="pd-variant-btn" onclick="selectSize('${esc(s)}',this)">${esc(s)}</button>`).join(''); } else document.getElementById('pdSizeSection').style.display='none';
+  if(p.colors&&p.colors.length){ document.getElementById('pdColorSection').style.display='block'; document.getElementById('pdColors').innerHTML=p.colors.map(c=>`<button class="pd-color-btn" onclick="selectColor('${c}',this)" style="background:${c}" title="${c}"></button>`).join(''); } else document.getElementById('pdColorSection').style.display='none';
+  if(p.variants&&p.variants.length){ document.getElementById('pdVariantSection').style.display='block'; document.getElementById('pdVariants').innerHTML=p.variants.map(v=>`<button class="pd-variant-btn" onclick="selectVariant('${esc(v)}',this)">${esc(v)}</button>`).join(''); } else document.getElementById('pdVariantSection').style.display='none';
+  const st=document.getElementById('pdSpecsTable');
+  st.innerHTML=p.specs&&p.specs.length ? p.specs.map(([k,v])=>`<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join('') : '<tr><td colspan="2" style="text-align:center;color:var(--muted);padding:16px">Koi specs nahi</td></tr>';
+  document.getElementById('homePage').style.display='none';
+  document.getElementById('productPage').style.display='block';
+  window.scrollTo(0,0);
+  pdTab('desc', document.querySelector('.pd-tab'));
+};
+
+window.showHomePage = function() { document.getElementById('productPage').style.display='none'; document.getElementById('homePage').style.display='block'; window.scrollTo(0,0); };
+window.pdTab = function(tab,el) { document.querySelectorAll('.pd-tab').forEach(t=>t.classList.remove('active')); document.querySelectorAll('.pd-tab-content').forEach(t=>t.classList.remove('active')); if(el) el.classList.add('active'); document.getElementById('pd-tab-'+tab).classList.add('active'); };
+window.selectSize=(s,el)=>{pdSelectedSize=s;el.closest('.pd-variants').querySelectorAll('.pd-variant-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');};
+window.selectColor=(c,el)=>{pdSelectedColor=c;el.closest('.pd-variants').querySelectorAll('.pd-color-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');};
+window.selectVariant=(v,el)=>{pdSelectedVariant=v;el.closest('.pd-variants').querySelectorAll('.pd-variant-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');};
+window.pdChangeQty=(d)=>{pdQty=Math.max(1,pdQty+d);document.getElementById('pdQtyNum').textContent=pdQty;};
+
+window.pdAddToCart=function(){
+  if(!currentPdId) return;
+  const p=products.find(x=>x.id===currentPdId);
+  const vn=[pdSelectedSize,pdSelectedColor?'Rang:'+pdSelectedColor:null,pdSelectedVariant].filter(Boolean).join(', ');
+  const ex=cart.find(i=>i.id===currentPdId&&i.vn===vn);
+  if(ex) ex.qty+=pdQty; else cart.push({...p,qty:pdQty,vn});
+  saveCart(); renderCart(); updateBadge(); showToast(`✅ ${p.name} cart mein add ho gaya!`);
+};
+window.pdBuyNow=function(){ pdAddToCart(); setTimeout(()=>{closeCart();openCheckout();},200); };
+
+// CART
+window.addToCart=function(id){
+  const p=products.find(x=>x.id===id); if(!p) return;
+  const ex=cart.find(i=>i.id===id&&!i.vn);
+  if(ex) ex.qty++; else cart.push({...p,qty:1,vn:''});
+  saveCart(); renderCart(); updateBadge(); showToast(`✅ ${p.name} cart mein add ho gaya!`);
+};
+
+function updateBadge(){ document.getElementById('cartCountBadge').textContent=cart.reduce((s,i)=>s+i.qty,0); }
+
+function renderCart(){
+  const c=document.getElementById('cartItems'),f=document.getElementById('cartFooter');
+  updateBadge();
+  if(!cart.length){ c.innerHTML='<div class="empty-cart"><div style="font-size:3rem">🛍️</div><p>Cart khali hai</p></div>'; f.style.display='none'; return; }
+  f.style.display='block';
+  c.innerHTML=cart.map((item,idx)=>`
+    <div class="cart-item">
+      <div class="cart-item-img">${item.imgUrl?`<img src="${item.imgUrl}">`:(item.extraImgs&&item.extraImgs[0])?`<img src="${item.extraImgs[0]}">`:item.image||'📦'}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${esc(item.name)}</div>
+        ${item.vn?`<div class="cart-item-variant">${esc(item.vn)}</div>`:''}
+        <div class="cart-item-price">Rs. ${item.price.toLocaleString()}</div>
+        <div class="qty-control"><button class="qty-btn" onclick="changeQty(${idx},-1)">−</button><span class="qty-num">${item.qty}</span><button class="qty-btn" onclick="changeQty(${idx},1)">+</button></div>
+      </div>
+      <button class="remove-item" onclick="removeItem(${idx})">🗑️</button>
+    </div>`).join('');
+  document.getElementById('cartTotal').textContent=`Rs. ${cart.reduce((s,i)=>s+i.price*i.qty,0).toLocaleString()}`;
+}
+
+window.changeQty=(idx,d)=>{ cart[idx].qty+=d; if(cart[idx].qty<=0) cart.splice(idx,1); saveCart(); renderCart(); };
+window.removeItem=(idx)=>{ cart.splice(idx,1); saveCart(); renderCart(); };
+window.openCart=()=>{ document.getElementById('cartDrawer').classList.add('show'); document.getElementById('cartOverlay').classList.add('show'); };
+window.closeCart=()=>{ document.getElementById('cartDrawer').classList.remove('show'); document.getElementById('cartOverlay').classList.remove('show'); };
+
+window.openCheckout=function(){
+  closeCart();
+  document.getElementById('checkoutItems').innerHTML=cart.map(i=>`<div class="order-line"><span>${esc(i.name)}${i.vn?' ('+esc(i.vn)+')':''} ×${i.qty}</span><span>Rs. ${(i.price*i.qty).toLocaleString()}</span></div>`).join('');
+  document.getElementById('checkoutTotal').textContent=`Rs. ${cart.reduce((s,i)=>s+i.price*i.qty,0).toLocaleString()}`;
+  document.getElementById('checkoutModal').classList.add('show');
+};
+window.closeCheckout=()=>document.getElementById('checkoutModal').classList.remove('show');
+
+window.sendWhatsAppOrder=function(){
+  const name=document.getElementById('custName').value.trim();
+  const phone=document.getElementById('custPhone').value.trim();
+  const address=document.getElementById('custAddress').value.trim();
+  const payment=document.getElementById('payMethod').value;
+  const note=document.getElementById('custNote').value.trim();
+  if(!name||!phone||!address){ showToast('❌ Naam, phone aur address zaroori hai!'); return; }
+  const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const lines=cart.map(i=>`• ${i.name}${i.vn?' ('+i.vn+')':''} × ${i.qty} = Rs. ${(i.price*i.qty).toLocaleString()}`).join('\n');
+  const msg=`🛒 *NAYA ORDER — ${storeData.name}*\n\n📦 *Items:*\n${lines}\n\n💰 *Total: Rs. ${total.toLocaleString()}*\n\n👤 *Customer:* ${name}\n📞 *Phone:* ${phone}\n🏠 *Address:* ${address}\n💳 *Payment:* ${payment}\n${note?'📝 *Note:* '+note+'\n':''}\n✅ Please confirm my order!`;
+  const num=(storeData.phone||'').replace(/\D/g,'');
+  const wa=num.startsWith('0')?'92'+num.slice(1):num;
+  window.open(`https://wa.me/${wa}?text=${encodeURIComponent(msg)}`,'_blank');
+  cart=[]; saveCart(); renderCart(); closeCheckout();
+  showToast('🎉 WhatsApp khul gaya! Order bhej dein!');
+};
+
+// ADMIN
+window.openLogin=function(){ if(isLoggedIn){openAdmin();return;} document.getElementById('loginModal').classList.add('show'); document.getElementById('loginError').style.display='none'; document.getElementById('loginPass').value=''; setTimeout(()=>document.getElementById('loginPass').focus(),100); };
+window.closeLogin=()=>document.getElementById('loginModal').classList.remove('show');
+window.doLogin=function(){ if(document.getElementById('loginPass').value===storeData.password){ isLoggedIn=true; closeLogin(); openAdmin(); } else document.getElementById('loginError').style.display='block'; };
+
+window.openAdmin=function(){
+  document.getElementById('adminStoreName').value=storeData.name||'';
+  document.getElementById('adminPhone').value=storeData.phone||'';
+  document.getElementById('adminTagline').value=storeData.tagline||'';
+  document.getElementById('adminNewPass').value='';
+  renderAdminProducts();
+  document.getElementById('adminPanel').classList.add('show');
+};
+window.closeAdmin=()=>document.getElementById('adminPanel').classList.remove('show');
+window.switchTab=(tab,el)=>{ document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active')); document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active')); el.classList.add('active'); document.getElementById('tab-'+tab).classList.add('active'); };
+
+function renderAdminProducts(){
+  document.getElementById('adminProductsList').innerHTML=products.map(p=>`
+    <div class="p-edit-card" id="pedit-${p.id}">
+      <div class="p-edit-header" onclick="toggleCard('${p.id}')">
+        <div class="p-edit-thumb">${p.imgUrl?`<img src="${p.imgUrl}">`:(p.extraImgs&&p.extraImgs[0])?`<img src="${p.extraImgs[0]}">`:p.image||'📦'}</div>
+        <div class="p-edit-title">${esc(p.name)}</div>
+        <div class="p-edit-price-tag">Rs. ${p.price.toLocaleString()}</div>
+        <div style="color:var(--muted);font-size:0.8rem">▼</div>
+      </div>
+      <div class="p-edit-body" id="pbody-${p.id}">
+        <div class="sdiv">📝 Basic Info</div>
+        <div class="p-row">
+          <input placeholder="Product naam" value="${esc(p.name)}" onchange="up('${p.id}','name',this.value)">
+          <input type="number" placeholder="Price" value="${p.price}" style="max-width:100px" onchange="up('${p.id}','price',parseInt(this.value)||0)">
+          <input type="number" placeholder="Asal price" value="${p.origPrice||''}" style="max-width:110px" onchange="up('${p.id}','origPrice',parseInt(this.value)||0)">
+        </div>
+        <div class="p-row"><textarea placeholder="Mukhtasar description" onchange="up('${p.id}','shortDesc',this.value)">${esc(p.shortDesc||'')}</textarea></div>
+        <div class="sdiv">🖼️ Main Image</div>
+        <div class="img-upload-area">
+          <div class="img-thumb-a" id="mthumb-${p.id}" onclick="document.getElementById('fmain-${p.id}').click()">
+            ${p.imgUrl?`<img src="${p.imgUrl}">`:p.image||'📦'}
+          </div>
+          <label class="upload-lbl" for="fmain-${p.id}">📷 Main Photo Upload<br><small style="color:#93c5fd;font-weight:400">Click karein</small></label>
+          <input type="file" accept="image/*" class="fhide" id="fmain-${p.id}" onchange="handleMain(event,'${p.id}')">
+        </div>
+        <div class="sdiv">🖼️ Extra Images (gallery)</div>
+        <div class="extra-imgs" id="eimgs-${p.id}">
+          ${(p.extraImgs||[]).map((url,i)=>`<div class="extra-img-wrap"><img src="${url}"><button class="extra-img-rm" onclick="rmExtra('${p.id}',${i})">✕</button></div>`).join('')}
+        </div>
+        <label class="upload-lbl" for="fextra-${p.id}" style="margin-bottom:10px">+ Aur Photos Add Karein</label>
+        <input type="file" accept="image/*" multiple class="fhide" id="fextra-${p.id}" onchange="handleExtra(event,'${p.id}')">
+        <div class="sdiv">📄 Poori Tafseel</div>
+        <div class="p-row"><textarea rows="5" placeholder="Features, material, warranty..." onchange="up('${p.id}','fullDesc',this.value)">${esc(p.fullDesc||'')}</textarea></div>
+        <div class="sdiv">📐 Sizes</div>
+        <div id="sizes-${p.id}">${(p.sizes||[]).map((s,i)=>`<div class="spec-row"><input value="${esc(s)}" onchange="upArr('${p.id}','sizes',${i},this.value)"><button class="btn-del-spec" onclick="rmArr('${p.id}','sizes',${i})">✕</button></div>`).join('')}</div>
+        <button class="btn-add-spec" onclick="addArr('${p.id}','sizes')">+ Size Add</button>
+        <div class="sdiv">🎨 Colors (hex)</div>
+        <div id="colors-${p.id}">${(p.colors||[]).map((c,i)=>`<div class="spec-row"><input value="${esc(c)}" style="max-width:120px" onchange="upArr('${p.id}','colors',${i},this.value)"><div style="width:28px;height:28px;border-radius:50%;background:${c};border:2px solid #e5e7eb;flex-shrink:0"></div><button class="btn-del-spec" onclick="rmArr('${p.id}','colors',${i})">✕</button></div>`).join('')}</div>
+        <button class="btn-add-spec" onclick="addArr('${p.id}','colors')">+ Color Add</button>
+        <div class="sdiv">🔖 Variants</div>
+        <div id="variants-${p.id}">${(p.variants||[]).map((v,i)=>`<div class="spec-row"><input value="${esc(v)}" onchange="upArr('${p.id}','variants',${i},this.value)"><button class="btn-del-spec" onclick="rmArr('${p.id}','variants',${i})">✕</button></div>`).join('')}</div>
+        <button class="btn-add-spec" onclick="addArr('${p.id}','variants')">+ Variant Add</button>
+        <div class="sdiv">📋 Specifications</div>
+        <div id="specs-${p.id}">${(p.specs||[]).map(([k,v],i)=>`<div class="spec-row"><input value="${esc(k)}" style="max-width:130px" onchange="upSpec('${p.id}',${i},0,this.value)"><input value="${esc(v)}" onchange="upSpec('${p.id}',${i},1,this.value)"><button class="btn-del-spec" onclick="rmSpec('${p.id}',${i})">✕</button></div>`).join('')}</div>
+        <button class="btn-add-spec" onclick="addSpec('${p.id}')">+ Spec Add</button>
+        <div><button class="btn-del-p" onclick="delProduct('${p.id}')">🗑️ Product Delete Karein</button></div>
+      </div>
+    </div>`).join('');
+}
+
+window.toggleCard=(id)=>{ document.getElementById('pbody-'+id).classList.toggle('open'); };
+window.up=(id,f,v)=>{ const p=products.find(x=>x.id===id); if(p) p[f]=v; };
+window.handleMain=(ev,id)=>{ const f=ev.target.files[0]; if(!f) return; if(f.size>3*1024*1024){showToast('❌ 3MB se chhoti photo select karein');return;} const r=new FileReader(); r.onload=e=>{ up(id,'imgUrl',e.target.result); const t=document.getElementById('mthumb-'+id); if(t) t.innerHTML=`<img src="${e.target.result}">`; showToast('✅ Photo upload ho gayi!'); }; r.readAsDataURL(f); };
+window.handleExtra=(ev,id)=>{ const files=Array.from(ev.target.files); if(!files.length) return; const p=products.find(x=>x.id===id); if(!p) return; if(!p.extraImgs) p.extraImgs=[]; let done=0; files.forEach(f=>{ if(f.size>3*1024*1024){showToast('❌ 3MB se chhoti');return;} const r=new FileReader(); r.onload=e=>{ p.extraImgs.push(e.target.result); done++; if(done===files.length){ refreshExtra(id); showToast(`✅ ${done} photo(s) add ho gayi!`); } }; r.readAsDataURL(f); }); };
+window.rmExtra=(id,i)=>{ const p=products.find(x=>x.id===id); if(p&&p.extraImgs) p.extraImgs.splice(i,1); refreshExtra(id); };
+function refreshExtra(id){ const p=products.find(x=>x.id===id); if(!p) return; const c=document.getElementById('eimgs-'+id); if(c) c.innerHTML=(p.extraImgs||[]).map((url,i)=>`<div class="extra-img-wrap"><img src="${url}"><button class="extra-img-rm" onclick="rmExtra('${id}',${i})">✕</button></div>`).join(''); }
+window.upArr=(id,f,i,v)=>{ const p=products.find(x=>x.id===id); if(p&&p[f]) p[f][i]=v; };
+window.rmArr=(id,f,i)=>{ const p=products.find(x=>x.id===id); if(p&&p[f]){ p[f].splice(i,1); renderAdminProducts(); setTimeout(()=>{ const b=document.getElementById('pbody-'+id); if(b) b.classList.add('open'); },10); } };
+window.addArr=(id,f)=>{ const p=products.find(x=>x.id===id); if(!p) return; if(!p[f]) p[f]=[]; p[f].push(''); renderAdminProducts(); setTimeout(()=>{ const b=document.getElementById('pbody-'+id); if(b) b.classList.add('open'); },10); };
+window.upSpec=(id,i,col,v)=>{ const p=products.find(x=>x.id===id); if(p&&p.specs&&p.specs[i]) p.specs[i][col]=v; };
+window.rmSpec=(id,i)=>{ const p=products.find(x=>x.id===id); if(p&&p.specs){ p.specs.splice(i,1); renderAdminProducts(); setTimeout(()=>{ const b=document.getElementById('pbody-'+id); if(b) b.classList.add('open'); },10); } };
+window.addSpec=(id)=>{ const p=products.find(x=>x.id===id); if(!p) return; if(!p.specs) p.specs=[]; p.specs.push(['','']); renderAdminProducts(); setTimeout(()=>{ const b=document.getElementById('pbody-'+id); if(b) b.classList.add('open'); },10); };
+window.delProduct=(id)=>{ if(confirm('Yeh product delete karein?')){ products=products.filter(x=>x.id!==id); renderAdminProducts(); } };
+window.addNewProduct=function(){ const id='p'+Date.now(); products.push({id,name:"Naya Product",shortDesc:"Description...",fullDesc:"",price:999,origPrice:0,image:"🎁",imgUrl:"",extraImgs:[],sizes:[],colors:[],variants:[],specs:[]}); renderAdminProducts(); setTimeout(()=>{ const last=document.getElementById('adminProductsList').lastElementChild; if(last) last.querySelector('.p-edit-header').click(); },50); };
+
+window.saveAdmin=async function(){
+  storeData.name=document.getElementById('adminStoreName').value||storeData.name;
+  storeData.phone=document.getElementById('adminPhone').value||storeData.phone;
+  storeData.tagline=document.getElementById('adminTagline').value||storeData.tagline;
+  const np=document.getElementById('adminNewPass').value; if(np) storeData.password=np;
+  showToast('💾 Save ho raha hai...');
+  const ok = await saveToFirebase();
+  if(ok){ renderAll(); closeAdmin(); showToast('✅ Store save ho gaya — sab ko dikh raha hai!'); }
+  else showToast('❌ Save nahi hua — internet check karein');
+};
+
+function showToast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3000); }
+
+// INIT
+loadFromFirebase();
+</script>
+</body>
+</html>
